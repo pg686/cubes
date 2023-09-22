@@ -12,7 +12,4 @@ await accessoryService.create(body);
    res.redirect('/');
 })
 
-router.get('/attach/:id', (req, res) => {
-    res.render('accessory/attach');
-});
 module.exports = router;
