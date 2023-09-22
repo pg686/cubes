@@ -10,19 +10,18 @@ router.post('/create', async (req, res) => {
     return res.status(400).send('Invalid request');
    }
 try{
-  await cubeService.save(cube)
+  await cubeService.create(cube)
   res.redirect('/');
-} catch(error){
+} catch(err){
     res.status(400).send(err)
 }
 
 
 
 });
-router.get('/details/:id',  (req, res) => {
+router.get('/details/:id',  async (req, res) => {
     const id = req.params.id;
-    const cubeDetails = cubeService.getOne(id);
-    console.log(cubeDetails, "cubeDetails")
+    const cubeDetails = await cubeService.getOne(id).lean();
     res.render('details', { cubeDetails });
 });
 
