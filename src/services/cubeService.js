@@ -10,14 +10,15 @@ exports.getOne = (cubeId) =>  Cube.findById(cubeId).populate('accessories');
 //        model: 'Cube'
 //    }
 //    });
-exports.getAll =async (search, from, to) => {
-    let cubes = await Cube.find().lean()
-    //const result =  cubes
-    //.filter(x => x.name?.toLowerCase().includes(search?.toLowerCase() || ''))
-    //.filter(x => from ? x.difficultyLevel >= from : true)
-    //.filter(x => to ? x.difficultyLevel <= to : true)
-//
-    return cubes
+exports.getAll =async (search, fromInput, toInput) => {
+    const from = Number(fromInput) || 0;
+    const to = Number(toInput) || 6;
+
+    let cubes = await Cube.find({
+        name: { $regex: new RegExp(search, 'i') },
+        difficultyLevel: { $gte: from, $lte: to }
+    }).lean();
+    return cubes;
 }
 exports.attachAccessory = async (cubeId, accessoryId) => {
     const accessory = await accessoryService.getOne(accessoryId);
