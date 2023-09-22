@@ -2,7 +2,6 @@ const fs = require('fs/promises');
 const path = require('path');
 const Cube = require('../models/Cube');
 
-
 exports.create = (cube) => Cube.create(cube);
 
 exports.getOne = (cubeId) => Cube.findById(cubeId);
